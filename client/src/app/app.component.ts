@@ -1,5 +1,7 @@
-import{HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { User } from './modules/account/models';
+import { AccountService } from './modules/account/services';
 
 
 @Component({
@@ -8,21 +10,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
- 
- public title = 'client';
- public users :any;
- public test :any=[1,2,3]
 
-  constructor(private http:HttpClient) {
+  public loginUser: User | undefined;
+
+  constructor(
+    private accountService: AccountService
+  ) {
     console.log('App component initialized!');
+
+    this.accountService.getLoginUserObservable().subscribe(user => {
+      if (user)
+        this.loginUser = user;
+    });
   }
 
   ngOnInit(): void {
-   this.http.get('https://localhost:5001/api/users').subscribe({
-     next:response=> this.users = response,
-     error:error=> console.log(error),
-     complete:()=>console.log('Request completed'+ this.users[0].id),
-   })
+    this.loginUser = this.accountService.getLoginUserData();
   }
-  
+
 }

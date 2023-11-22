@@ -9,8 +9,8 @@ import { User } from '../models';
 })
 
 export class AccountService {
-  //private baseUrl = environment.apiUrl;
-  private baseUrl = 'https://localhost:5001/api/';
+  private baseUrl = environment.apiUrl;
+  //private baseUrl = 'https://localhost:5001/api/';
 
   private loginUserObservable = new BehaviorSubject<any>(null);
   public getLoginUserObservable = (): Observable<any> => this.loginUserObservable.asObservable();

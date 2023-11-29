@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AccountService } from '../../services';
 import { first } from 'rxjs';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { SharedService } from 'src/app/_services';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent {
     private accountService: AccountService,
     private route: ActivatedRoute,
     private router: Router,
+    private sharedService: SharedService,
   ) {
     console.log('Login component is initialized')
   }
@@ -37,11 +39,8 @@ export class LoginComponent {
       },
       error: error => {
         this.loading = false;
-        //this.toastr.error(error, 'Login failed.');
+        this.sharedService.errorMsg('Login Failed');
       }
     });
-
-
-    console.log(this.loginInfo);
   };
 }

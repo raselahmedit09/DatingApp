@@ -1,6 +1,16 @@
-<app-header>app header</app-header>
-
-<app-sidebar>side bar</app-sidebar>
-<router-outlet></router-outlet>
-
-<app-footer>footer</app-footer>
+<div class="row grow w-100">
+    <div class="col-12 bg-primary py-3">
+        <app-header>app header</app-header>
+    </div>
+    <div class="col-2  py-3">
+        <app-sidebar></app-sidebar>
+    </div>
+    <div class="main col-10 bg-warning h-300 py-3">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+<div class="row w-100">
+    <div class="col-12 py-3 bg-danger">
+        <app-footer>footer</app-footer>
+    </div>
+</div>

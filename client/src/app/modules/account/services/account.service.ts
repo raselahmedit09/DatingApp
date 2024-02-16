@@ -30,6 +30,18 @@ export class AccountService {
     )
   }
 
+  public register(model: any) {
+    return this.http.post<User>(this.baseUrl + 'Account/register', model).pipe(
+      map((response: User) => {
+        if (response) {
+          localStorage.setItem('user', JSON.stringify(response));
+          this.setLoginUserObservable(response);
+        }
+      })
+    )
+  }
+
+
   public logout() {
     localStorage.removeItem('user');
     this.setLoginUserObservable(null);

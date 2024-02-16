@@ -9,10 +9,12 @@ namespace API.Controllers;
 [Authorize]
 public class UsersController : BaseApiController
 {
+    private readonly ILogger<UsersController> _logger;
     private readonly DataContext _dataContext;
-    public UsersController(DataContext dataContext)
+    public UsersController(DataContext dataContext, ILogger<UsersController> logger)
     {
         _dataContext = dataContext;
+        _logger = logger;
     }
 
     [AllowAnonymous]

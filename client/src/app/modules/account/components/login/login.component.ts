@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { AccountService } from '../../services';
 import { first } from 'rxjs';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { SharedService } from 'src/app/_services';
+import { Router } from '@angular/router';
+import { SharedService } from 'src/app/_helpers';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,6 @@ export class LoginComponent {
 
   constructor(
     private accountService: AccountService,
-    private route: ActivatedRoute,
     private router: Router,
     private sharedService: SharedService,
   ) {
@@ -34,12 +33,11 @@ export class LoginComponent {
 
     this.accountService.login(this.loginInfo).pipe(first()).subscribe({
       next: () => {
-        //const returnUrl = this.route.snapshot.queryParams['main-dashboard'] || '/';
         this.router.navigateByUrl('/main-dashboard');
       },
-      error: error => {
+      error: err => {
         this.loading = false;
-        this.sharedService.errorMsg('Login Failed');
+        //this.sharedService.errorMsg(err.error ? err.error : 'Login Failed');
       }
     });
   };

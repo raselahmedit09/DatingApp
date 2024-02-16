@@ -47,8 +47,12 @@ public class AccountController : BaseApiController
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+    public async Task<ActionResult<object>> Login(LoginDto loginDto)
     {
+        var thing = _dataContext.Users.Find(-1);
+
+        Console.WriteLine(thing.ToString());
+
         var user = await _dataContext.Users
             .SingleOrDefaultAsync(x => x.UserName == loginDto.UserName);
 
@@ -62,8 +66,6 @@ public class AccountController : BaseApiController
         {
             if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
         }
-
-        var test = _tokenService.CreateToken(user);
 
         return new UserDto
         {

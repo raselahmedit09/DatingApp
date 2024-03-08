@@ -51,8 +51,6 @@ public class AccountController : BaseApiController
     {
         var thing = _dataContext.Users.Find(-1);
 
-        Console.WriteLine(thing.ToString());
-
         var user = await _dataContext.Users
             .SingleOrDefaultAsync(x => x.UserName == loginDto.UserName);
 

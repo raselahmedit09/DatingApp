@@ -12,3 +12,12 @@ export class MainDashboardComponent implements OnInit {
   }
 
 }
+
+
+/*
+https://randomuser.me/api/portraits/men/4.jpg - todd
+https://randomuser.me/api/portraits/women/25.jpg - lisa
+https://randomuser.me/api/portraits/women/46.jpg --karen
+https://randomuser.me/api/portraits/women/30.jpg --margo
+
+*/

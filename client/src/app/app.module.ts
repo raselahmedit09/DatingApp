@@ -5,8 +5,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SharedModule } from './_helpers';
-import { ErrorInterceptor } from './_helpers/error.interceptor';
+import { JwtInterceptor, SharedModule, ErrorInterceptor } from './_helpers';
 
 
 @NgModule({
@@ -22,6 +21,7 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

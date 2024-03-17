@@ -1,22 +1,29 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
 public class AccountController : BaseApiController
 {
-    private DataContext _dataContext;
+    private readonly ILogger<AccountController> _logger;
+    private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
     private ITokenService _tokenService;
 
-    public AccountController(DataContext dataContext, ITokenService tokenService)
+    public AccountController(
+        ILogger<AccountController> logger,
+        IMapper mapper,
+        ITokenService tokenService,
+        IUnitOfWork unitOfWork)
     {
-        _dataContext = dataContext;
+        _logger = logger;
+        _mapper = mapper;
+        _unitOfWork = unitOfWork;
         _tokenService = tokenService;
     }
 
@@ -36,8 +43,8 @@ public class AccountController : BaseApiController
             PasswordSalt = hmac.Key,
         };
 
-        _dataContext.Users.Add(user);
-        await _dataContext.SaveChangesAsync();
+        await _unitOfWork._userRepository.Add(user);
+        await _unitOfWork.CompleteAsync();
 
         return new UserDto
         {
@@ -49,10 +56,8 @@ public class AccountController : BaseApiController
     [HttpPost("login")]
     public async Task<ActionResult<object>> Login(LoginDto loginDto)
     {
-        var thing = _dataContext.Users.Find(-1);
 
-        var user = await _dataContext.Users
-            .SingleOrDefaultAsync(x => x.UserName == loginDto.UserName);
+        var user = await _unitOfWork._userRepository.GetUserByUserName(loginDto.UserName);
 
         if (user == null) return Unauthorized("Invalid username");
 
@@ -75,7 +80,7 @@ public class AccountController : BaseApiController
 
     private async Task<bool> IsUserExists(string userName)
     {
-        Console.WriteLine(userName);
-        return await _dataContext.Users.AnyAsync(x => x.UserName == userName.ToLower());
+
+        return await _unitOfWork._userRepository.IsUserExists(userName);
     }
 }

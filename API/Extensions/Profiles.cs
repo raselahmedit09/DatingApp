@@ -10,9 +10,10 @@ public class Profiles : Profile
     {
         //----------------------------- Database to Domain -------------------------
         CreateMap<AppUser, UserDto>();
+        CreateMap<Member, MemberDto>();
 
         //----------------------------- Domain to Database -------------------------
         CreateMap<UserDto, AppUser>();
-
+        //CreateMap<MemberDto, Member>();
     }
 }

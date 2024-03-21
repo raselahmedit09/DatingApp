@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using API.Data;
-using API.DTOs;
-using API.Entities;
+﻿using API.DTOs;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;

@@ -14,6 +14,8 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     }
 
     public IUserRepository _userRepository => new UserRepository(_dbContext);
+    public IMemberRepository _memberRepository => new MemberRepository(_dbContext);
+
 
     public async Task<bool> CompleteAsync()
     {

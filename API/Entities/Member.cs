@@ -18,8 +18,4 @@ public partial class Member
     public string City { get; set; }
     public string Country { get; set; }
     public DateTime Created { get; set; }
-
-
-
-
 }

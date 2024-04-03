@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
+[Authorize]
 public class MembersController : BaseApiController
 {
     private readonly ILogger<MembersController> _logger;
@@ -27,9 +28,19 @@ public class MembersController : BaseApiController
     [HttpGet("GetMembersWithPhoto")]
     public async Task<ActionResult<IList<MemberDto>>> GetMembersWithPhoto()
     {
-        var users = await _unitOfWork._memberRepository.GetMembersWithPhoto();
-        IList<MemberDto> memberList = _mapper.Map<IEnumerable<MemberDto>>(users).ToList();
+        var members = await _unitOfWork._memberRepository.GetMembersWithPhoto();
+        IList<MemberDto> memberList = _mapper.Map<IEnumerable<MemberDto>>(members).ToList();
         return Ok(memberList);
     }
+
+    [AllowAnonymous]
+    [HttpGet("GetMemberById")]
+    public async Task<ActionResult<IList<MemberDetailDto>>> GetMemberById(int id)
+    {
+        var member = await _unitOfWork._memberRepository.GetById(id);
+
+        return Ok(member);
+    }
+
 
 }

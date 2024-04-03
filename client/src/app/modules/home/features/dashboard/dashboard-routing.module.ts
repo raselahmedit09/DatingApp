@@ -8,7 +8,7 @@ const routes: Routes = [
     children: [
       { path: 'main-dashboard', component: MainDashboardComponent },
     ]
-  }
+  },
 ];
 
 @NgModule({

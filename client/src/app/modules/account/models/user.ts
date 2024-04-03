@@ -1,4 +1,4 @@
-export class User {
-    userName: string | undefined;
-    token: string | undefined;
+export interface User {
+    userName: string;
+    token: string;
 }

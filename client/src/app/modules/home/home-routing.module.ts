@@ -5,6 +5,7 @@ import { HomeComponent } from './home.component';
 
 const dashboardModule = () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule);
 const userModule = () => import('./features/user/user.module').then(m => m.UserModule);
+const memberModule = () => import('./features/member/member.module').then(m => m.MemberModule);
 
 const routes: Routes = [
   {
@@ -12,8 +13,10 @@ const routes: Routes = [
     children: [
       { path: '', loadChildren: dashboardModule },
       { path: '', loadChildren: userModule },
+      { path: '', loadChildren: memberModule },
+      { path: '**', redirectTo: 'main-dashboard' }
     ]
-  }
+  },
 ];
 
 @NgModule({

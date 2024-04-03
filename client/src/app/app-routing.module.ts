@@ -15,8 +15,6 @@ const routes: Routes = [
     canActivate: [authGuard],
     loadChildren: homeModule
   },
-
-  { path: '**', redirectTo: 'main-dashboard', pathMatch: 'full' }
 ];
 
 @NgModule({

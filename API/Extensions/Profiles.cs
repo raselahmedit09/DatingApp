@@ -11,9 +11,9 @@ public class Profiles : Profile
         //----------------------------- Database to Domain -------------------------
         CreateMap<AppUser, UserDto>();
         CreateMap<Member, MemberDto>();
+        CreateMap<MemberPhoto, MemberPhotoDto>();
 
         //----------------------------- Domain to Database -------------------------
         CreateMap<UserDto, AppUser>();
-        //CreateMap<MemberDto, Member>();
     }
 }

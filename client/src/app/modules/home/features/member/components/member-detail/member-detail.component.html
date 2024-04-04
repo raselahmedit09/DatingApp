@@ -1,4 +1,4 @@
-<!-- <div class="row" *ngIf="member">
+<div class="row" *ngIf="member">
     <div class="col-4">
         <div class="card">
             <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}"
@@ -18,7 +18,7 @@
                 </div>
                 <div>
                     <strong>Member since:</strong>
-                    <p>{{member.created}}</p>
+                    <p>{{member.created | dateFormatPipe}}</p>
                 </div>
             </div>
             <div class="card-footer">
@@ -30,23 +30,24 @@
         </div>
     </div>
     <div class="col-8">
-        <tabset class="member-tabset">
-            <tab heading="About {{member.knownAs}}">
+
+        <mat-tab-group>
+            <mat-tab label="About {{member.knownAs}}">
                 <h4>Description</h4>
                 <p>{{member.introduction}}</p>
                 <h4>Looking for</h4>
                 <p>{{member.lookingFor}}</p>
-            </tab>
-            <tab heading="Interests">
+            </mat-tab>
+            <mat-tab label="Interests">
                 <h4>Interests</h4>
                 <p>{{member.interests}}</p>
-            </tab>
-            <tab heading="Photos" #photoTab="tab">
-                <gallery *ngIf="photoTab.active" [items]="images" class="gallery"></gallery>
-            </tab>
-            <tab heading="Messages">
+            </mat-tab>
+            <mat-tab label="Photos">
+                <gallery imageSize="cover" fluid [items]="images"></gallery>
+            </mat-tab>
+            <mat-tab label="Messages">
                 <p>Messages will go here</p>
-            </tab>
-        </tabset>
+            </mat-tab>
+        </mat-tab-group>
     </div>
-</div> -->
+</div>

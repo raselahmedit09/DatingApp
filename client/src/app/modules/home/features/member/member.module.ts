@@ -5,17 +5,18 @@ import { MemberListComponent } from './components/member-list/member-list.compon
 import { SharedModule } from 'src/app/_helpers';
 import { MemberCardComponent } from './components/member-list/member-card/member-card.component';
 import { MemberDetailComponent } from './components/member-detail/member-detail.component';
-
+import { GalleryModule } from 'ng-gallery';
 
 @NgModule({
   declarations: [
     MemberListComponent,
     MemberCardComponent,
-    MemberDetailComponent
+    MemberDetailComponent,
   ],
   imports: [
     MemberRoutingModule,
-    SharedModule
+    SharedModule,
+    GalleryModule,
   ]
 })
 export class MemberModule {

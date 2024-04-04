@@ -25,21 +25,26 @@ public class MembersController : BaseApiController
     }
 
     [AllowAnonymous]
-    [HttpGet("GetMembersWithPhoto")]
-    public async Task<ActionResult<IList<MemberDto>>> GetMembersWithPhoto()
+    [HttpGet("GetMembers")]
+    public async Task<ActionResult<IList<MemberDto>>> GetMembers()
     {
-        var members = await _unitOfWork._memberRepository.GetMembersWithPhoto();
+        var members = await _unitOfWork._memberRepository.GetMembers();
         IList<MemberDto> memberList = _mapper.Map<IEnumerable<MemberDto>>(members).ToList();
         return Ok(memberList);
     }
 
     [AllowAnonymous]
     [HttpGet("GetMemberById")]
-    public async Task<ActionResult<IList<MemberDetailDto>>> GetMemberById(int id)
+    public async Task<ActionResult<IList<MemberDto>>> GetMemberById(int id)
     {
-        var member = await _unitOfWork._memberRepository.GetById(id);
+        var member = await _unitOfWork._memberRepository.GetMemberById(id);
+        MemberDto memberDetail = _mapper.Map<MemberDto>(member);
 
-        return Ok(member);
+        var memberPhotos = await _unitOfWork._memberPhotoRepository.GetPhotosByMemberId(memberDetail.Id);
+        IList<MemberPhotoDto> memberPhotoList = _mapper.Map<IEnumerable<MemberPhotoDto>>(memberPhotos).ToList();
+        memberDetail.MemberPhotos = memberPhotoList;
+
+        return Ok(_mapper.Map<MemberDto>(memberDetail));
     }
 
 

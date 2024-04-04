@@ -5,6 +5,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { dateFormatPipe } from './custom.pipes';
 
 
 const materialModules = [
@@ -18,13 +20,20 @@ const formModules = [
   ReactiveFormsModule,
 ];
 
+const customPipes = [
+  dateFormatPipe
+];
+
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    customPipes,
+  ],
   imports: [
     CommonModule,
     materialModules,
     formModules,
+    MatTabsModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
     })
@@ -34,6 +43,8 @@ const formModules = [
     materialModules,
     ToastrModule,
     formModules,
+    MatTabsModule,
+    customPipes,
   ],
 })
 export class SharedModule { }

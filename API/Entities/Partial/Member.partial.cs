@@ -6,4 +6,7 @@ public partial class Member
 {
     [NotMapped]
     public string PhotoUrl { get; set; }
+
+    [NotMapped]
+    public int Age { get; set; }
 }

@@ -8,7 +8,6 @@ import { Observable, map, of } from 'rxjs';
   providedIn: 'root'
 })
 export class MemberService {
-
   private baseUrl = environment.apiUrl;
   private members: Member[] = [];
 
@@ -21,7 +20,18 @@ export class MemberService {
   public getMembers() {
     if (this.members.length > 0) return of(this.members);
     let params = new HttpParams();
-    return this.http.get<Member[]>(this.baseUrl + 'Members/GetMembersWithPhoto', { params: params }).pipe(
+    return this.http.get<Member[]>(this.baseUrl + 'Members/GetMembers', { params: params }).pipe(
+      map((response: any) => {
+        return response;
+      })
+    )
+  }
+
+  public getMemberById(memberId: number) {
+    let params = new HttpParams()
+      .append("id", memberId.toString());
+
+    return this.http.get<Member[]>(this.baseUrl + 'Members/GetMemberById', { params: params }).pipe(
       map((response: any) => {
         return response;
       })

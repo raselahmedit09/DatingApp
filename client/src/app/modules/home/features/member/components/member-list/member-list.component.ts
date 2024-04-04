@@ -18,7 +18,7 @@ export class MemberListComponent {
     this.getMemberList();
   }
 
-  private getMemberList() {
+  private getMemberList(): void {
     this.memberService.getMembers().subscribe({
       next: (res) => {
         this.members = of(res);

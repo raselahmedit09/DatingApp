@@ -11,7 +11,14 @@ public class MemberRepository : GenericRepository<Member>, IMemberRepository
     {
     }
 
-    public async Task<IEnumerable<Member>> GetMembersWithPhoto()
+    public async Task<Member> GetMemberById(int id)
+    {
+        return await _dataContext.GetSingleAsync<Member>("SELECT M.*, " +
+        " FLOOR(DATEDIFF(DAY, M.DateOfBirth, GETDATE()) / 365.25) AS Age,MP.PhotoUrl" +
+        " FROM Members AS M LEFT JOIN MemberPhotos AS MP ON M.Id = MP.MemberId AND MP.IsMain = 1 WHERE M.Id = " + id + " ");
+    }
+
+    public async Task<IEnumerable<Member>> GetMembers()
     {
         return await _dataContext.GetListAsync<Member>("SELECT M.Id,M.KnownAs,M.City,MP.PhotoUrl FROM Members AS M LEFT JOIN MemberPhotos AS MP ON M.Id = MP.MemberId AND MP.IsMain = 1");
 

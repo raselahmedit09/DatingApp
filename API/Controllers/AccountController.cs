@@ -54,7 +54,7 @@ public class AccountController : BaseApiController
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<object>> Login(LoginDto loginDto)
+    public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
 
         var user = await _unitOfWork._userRepository.GetUserByUserName(loginDto.UserName);
@@ -72,6 +72,7 @@ public class AccountController : BaseApiController
 
         return new UserDto
         {
+            Id = user.Id,
             UserName = user.UserName,
             Token = _tokenService.CreateToken(user)
         };

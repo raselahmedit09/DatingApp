@@ -5,7 +5,7 @@ import { MemberListComponent } from './components/member-list/member-list.compon
 import { SharedModule } from 'src/app/_helpers';
 import { MemberCardComponent } from './components/member-list/member-card/member-card.component';
 import { MemberDetailComponent } from './components/member-detail/member-detail.component';
-import { GalleryModule } from 'ng-gallery';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,8 +16,7 @@ import { GalleryModule } from 'ng-gallery';
   imports: [
     MemberRoutingModule,
     SharedModule,
-    GalleryModule,
-  ]
+  ],
 })
 export class MemberModule {
   constructor() {

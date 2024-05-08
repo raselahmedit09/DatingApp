@@ -9,11 +9,11 @@ public class Profiles : Profile
     public Profiles()
     {
         //----------------------------- Database to Domain -------------------------
-        CreateMap<AppUser, UserDto>();
-        CreateMap<Member, MemberDto>();
+        CreateMap<AppUser, UserDto>().ReverseMap();
+        CreateMap<Member, MemberDto>().ReverseMap(); ;
         CreateMap<MemberPhoto, MemberPhotoDto>();
 
         //----------------------------- Domain to Database -------------------------
-        CreateMap<UserDto, AppUser>();
+        //CreateMap<UserDto, AppUser>();
     }
 }

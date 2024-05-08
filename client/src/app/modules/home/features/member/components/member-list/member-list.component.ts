@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Member } from '../../models';
+import { MemberList } from '../../models';
 import { MemberService } from '../../services';
 
 @Component({
@@ -10,7 +10,7 @@ import { MemberService } from '../../services';
 })
 export class MemberListComponent {
 
-  public members: Observable<Member[]> | undefined
+  public members: Observable<MemberList[]> | undefined
 
   constructor(private memberService: MemberService) { }
 

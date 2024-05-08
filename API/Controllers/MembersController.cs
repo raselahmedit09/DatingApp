@@ -1,4 +1,5 @@
 using API.DTOs;
+using API.Entities;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -34,8 +35,8 @@ public class MembersController : BaseApiController
     }
 
     [AllowAnonymous]
-    [HttpGet("GetMemberById")]
-    public async Task<ActionResult<IList<MemberDto>>> GetMemberById(int id)
+    [HttpGet("GetMemberWithPhotosById")]
+    public async Task<ActionResult<IList<MemberDto>>> GetMemberWithPhotosById(int id)
     {
         var member = await _unitOfWork._memberRepository.GetMemberById(id);
         MemberDto memberDetail = _mapper.Map<MemberDto>(member);
@@ -47,5 +48,23 @@ public class MembersController : BaseApiController
         return Ok(_mapper.Map<MemberDto>(memberDetail));
     }
 
+    [AllowAnonymous]
+    [HttpPut("UpdateMember")]
+    public async Task<ActionResult> UpdateMember(MemberDto memberDto)
+    {
+        if (memberDto.Id > 0)
+        {
+            await _unitOfWork._memberRepository.Update(_mapper.Map<Member>(memberDto));
+        }
+        else
+        {
+            await _unitOfWork._memberRepository.Add(_mapper.Map<Member>(memberDto));
+        }
+
+        if (await _unitOfWork.CompleteAsync()) return NoContent();
+
+        return BadRequest("Failed to update user");
+
+    }
 
 }

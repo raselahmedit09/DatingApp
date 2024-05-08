@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/modules/account/models';
+import { AccountService } from 'src/app/modules/account/services';
 
 @Component({
   selector: 'app-main-dashboard',
@@ -7,17 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainDashboardComponent implements OnInit {
 
-  ngOnInit(): void {
+  public loginUser: User | undefined;
 
+  constructor(
+    private accountService: AccountService,
+  ) {
+    console.log('App component initialized!');
   }
 
+  ngOnInit(): void {
+    this.loginUser = this.accountService.getLoginUserData();
+    console.log(this.loginUser);
+  }
 }
-
-
-/*
-https://randomuser.me/api/portraits/men/4.jpg - todd
-https://randomuser.me/api/portraits/women/25.jpg - lisa
-https://randomuser.me/api/portraits/women/46.jpg --karen
-https://randomuser.me/api/portraits/women/30.jpg --margo
-
-*/

@@ -7,4 +7,5 @@ public interface IGenericRepository<T> where T : class
     Task<bool> Add(T entity); // returns true if successful
     Task<bool> Delete(int id);
     Task<bool> Update(T entity);
+    Task<bool> IsExists(int id);
 }

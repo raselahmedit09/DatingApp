@@ -87,4 +87,11 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         }
     }
 
+    public virtual async Task<bool> IsExists(int id)
+    {
+        var entity = await dbSet.FindAsync(id);
+        if (entity != null) return true;
+
+        return false;
+    }
 }

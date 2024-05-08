@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Member } from '../../../models';
+import { MemberList } from '../../../models';
 
 @Component({
   selector: 'app-member-card',
@@ -7,6 +7,6 @@ import { Member } from '../../../models';
   styleUrls: ['./member-card.component.css']
 })
 export class MemberCardComponent {
-  @Input() member: Member | undefined;
+  @Input() member: MemberList | undefined;
 
 }

@@ -28,7 +28,7 @@ export class MemberDetailComponent implements OnInit {
   }
 
   private loadMember() {
-    this.memberService.getMemberById(this.memberId).subscribe({
+    this.memberService.getMemberWithPhotosById(this.memberId).subscribe({
       next: (res) => {
         this.member = res;
         this.getImages();

@@ -1,19 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatTabsModule } from '@angular/material/tabs';
 import { dateFormatPipe } from './custom.pipes';
+import { GalleryModule } from 'ng-gallery';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
-
-const materialModules = [
-  MatFormFieldModule,
-  MatInputModule,
-  MatCardModule,
-];
 
 const formModules = [
   FormsModule,
@@ -31,20 +24,21 @@ const customPipes = [
   ],
   imports: [
     CommonModule,
-    materialModules,
     formModules,
-    MatTabsModule,
+    BsDropdownModule.forRoot(),
+    TabsModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
     })
   ],
   exports: [
     CommonModule,
-    materialModules,
     ToastrModule,
     formModules,
-    MatTabsModule,
     customPipes,
+    GalleryModule,
+    BsDropdownModule,
+    TabsModule,
   ],
 })
 export class SharedModule { }

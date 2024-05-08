@@ -11,21 +11,12 @@ import { AccountService } from './modules/account/services';
 })
 export class AppComponent implements OnInit {
 
-  public loginUser: User | undefined;
-
-  constructor(
-    private accountService: AccountService
-  ) {
+  constructor() {
     console.log('App component initialized!');
-
-    this.accountService.getLoginUserObservable().subscribe(user => {
-      if (user)
-        this.loginUser = user;
-    });
   }
 
   ngOnInit(): void {
-    this.loginUser = this.accountService.getLoginUserData();
+
   }
 
 }

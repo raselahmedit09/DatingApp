@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 
 import { Observable, catchError } from 'rxjs';
-import { NotificationService } from './notification.service';
+import { NotificationService } from '../_services/notification.service';
 import { AccountService } from '../modules/account/services';
 
 @Injectable()

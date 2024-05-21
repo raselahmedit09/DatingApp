@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../services';
 import { first } from 'rxjs';
 import { Router } from '@angular/router';
-import { NotificationService } from 'src/app/_helpers';
+import { NotificationService } from 'src/app/_services';
 
 @Component({
   selector: 'app-registration',

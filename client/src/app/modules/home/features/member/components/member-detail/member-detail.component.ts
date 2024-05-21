@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MemberService } from '../../services';
 import { ActivatedRoute } from '@angular/router';
 import { GalleryItem, ImageItem } from 'ng-gallery';
-import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
+import { MemberDetail } from '../../models/memberDetail';
 
 @Component({
   selector: 'app-member-detail',
@@ -10,7 +10,7 @@ import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
   styleUrls: ['./member-detail.component.css']
 })
 export class MemberDetailComponent implements OnInit {
-  public member: any = {};
+  public member!: MemberDetail;
   public images: GalleryItem[] = [];
   private memberId: any = 0;
 

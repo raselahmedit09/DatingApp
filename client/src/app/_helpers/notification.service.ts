@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 @Injectable({
   providedIn: 'root'
 })
-export class SharedService {
+export class NotificationService {
 
   constructor(
     private toastr: ToastrService

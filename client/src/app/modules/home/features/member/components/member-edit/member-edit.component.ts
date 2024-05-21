@@ -1,42 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { MemberDetail } from '../../models/memberDetail';
+import { ActivatedRoute } from '@angular/router';
+import { MemberService } from '../../services';
+import { NotificationService } from 'src/app/_helpers';
 
 @Component({
   selector: 'app-member-edit',
-  standalone: true,
-  imports: [],
   templateUrl: './member-edit.component.html',
   styleUrl: './member-edit.component.css'
 })
 export class MemberEditComponent implements OnInit {
 
-  public memberRegistrationForm!: FormGroup;
+  @ViewChild('editForm') editForm: NgForm | undefined;
+
+  public member!: MemberDetail;
+
+  private readonly memberId: number;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private memberService: MemberService,
+    private notificationService: NotificationService,
 
   ) {
-
+    this.memberId = Number(this.route.snapshot.paramMap.get('id'));
   }
-
 
   ngOnInit(): void {
-    this.intitForm();
+    this.loadMember();
   }
 
-  private intitForm(): void {
-    this.memberRegistrationForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+  private loadMember(): void {
+    this.memberService.getMemberById(this.memberId).subscribe({
+      next: (res) => {
+        this.member = res;
+      },
+      error: err => {
+      }
     });
-
   }
 
-
-
-  public onSubmit(): void {
-
+  public updateMember(): void {
+    this.memberService.updateMember(this.member).subscribe({
+      next: (res) => {
+        this.member = res;
+        this.notificationService.successMsg('Member info updated');
+      },
+      error: err => {
+      }
+    });
   }
-
 
 }

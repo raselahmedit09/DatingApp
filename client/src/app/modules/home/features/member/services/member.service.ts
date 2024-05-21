@@ -38,4 +38,24 @@ export class MemberService {
       })
     )
   }
+
+  public getMemberById(memberId: number) {
+    let params = new HttpParams()
+      .append("id", memberId.toString());
+
+    return this.http.get<MemberDetail[]>(this.baseUrl + 'Members/GetMemberById', { params: params }).pipe(
+      map((response: any) => {
+        return response;
+      })
+    )
+  }
+
+  public updateMember(model: any): Observable<MemberDetail> {
+    // Simulate delay
+    return this.http.put<MemberDetail[]>(this.baseUrl + 'Members/UpdateMember', model).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../services';
 import { first } from 'rxjs';
 import { Router } from '@angular/router';
-import { SharedService } from 'src/app/_helpers';
+import { NotificationService } from 'src/app/_helpers';
 
 @Component({
   selector: 'app-registration',
@@ -15,7 +15,7 @@ export class RegistrationComponent implements OnInit {
   public loading: boolean = false;
 
   constructor(
-    private sharedService: SharedService,
+    private notificationService: NotificationService,
     private accountService: AccountService,
     private router: Router,
   ) {
@@ -28,11 +28,11 @@ export class RegistrationComponent implements OnInit {
 
   public registration(): void {
     if (!this.registrationInfo.userName) {
-      this.sharedService.warningMsg('User name is required');
+      this.notificationService.warningMsg('User name is required');
     } else if (!this.registrationInfo.password) {
-      this.sharedService.warningMsg('Password is required');
+      this.notificationService.warningMsg('Password is required');
     } else if (this.registrationInfo.password !== this.registrationInfo.confirmPassword) {
-      this.sharedService.warningMsg('Password is not match with confirmation password');
+      this.notificationService.warningMsg('Password is not match with confirmation password');
     } else {
       this.loading = true;
 
@@ -42,7 +42,7 @@ export class RegistrationComponent implements OnInit {
         },
         error: err => {
           this.loading = false;
-          //   this.sharedService.errorMsg('Registration failed');
+          //   this.NotificationService.errorMsg('Registration failed');
         }
       });
     }

@@ -6,6 +6,7 @@ import { dateFormatPipe } from './custom.pipes';
 import { GalleryModule } from 'ng-gallery';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 const formModules = [
@@ -25,10 +26,14 @@ const customPipes = [
   imports: [
     CommonModule,
     formModules,
+    ReactiveFormsModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
+    }),
+    NgxSpinnerModule.forRoot({
+      type: 'line-scale-party'
     })
   ],
   exports: [
@@ -39,6 +44,7 @@ const customPipes = [
     GalleryModule,
     BsDropdownModule,
     TabsModule,
+    NgxSpinnerModule,
   ],
 })
 export class SharedModule { }

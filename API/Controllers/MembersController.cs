@@ -49,6 +49,15 @@ public class MembersController : BaseApiController
     }
 
     [AllowAnonymous]
+    [HttpGet("GetMemberById")]
+    public async Task<ActionResult<IList<MemberDto>>> GetMemberById(int id)
+    {
+        var member = await _unitOfWork._memberRepository.GetMemberById(id);
+        MemberDto memberDetail = _mapper.Map<MemberDto>(member);
+        return Ok(_mapper.Map<MemberDto>(memberDetail));
+    }
+
+    [AllowAnonymous]
     [HttpPut("UpdateMember")]
     public async Task<ActionResult> UpdateMember(MemberDto memberDto)
     {
@@ -56,10 +65,20 @@ public class MembersController : BaseApiController
         {
             await _unitOfWork._memberRepository.Update(_mapper.Map<Member>(memberDto));
         }
-        else
-        {
-            await _unitOfWork._memberRepository.Add(_mapper.Map<Member>(memberDto));
-        }
+
+        if (await _unitOfWork.CompleteAsync()) return NoContent();
+
+        return BadRequest("Failed to update user");
+
+    }
+
+    [AllowAnonymous]
+    [HttpPut("AddMember")]
+    public async Task<ActionResult> AddMember(MemberDto memberDto)
+    {
+
+        await _unitOfWork._memberRepository.Add(_mapper.Map<Member>(memberDto));
+
 
         if (await _unitOfWork.CompleteAsync()) return NoContent();
 

@@ -7,14 +7,14 @@ import {
 } from '@angular/common/http';
 
 import { Observable, catchError } from 'rxjs';
-import { SharedService } from './shared.service';
+import { NotificationService } from './notification.service';
 import { AccountService } from '../modules/account/services';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
   constructor(
-    private _sharedService: SharedService,
+    private _NotificationService: NotificationService,
     private _accountService: AccountService,
   ) { }
 
@@ -24,20 +24,20 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (err) {
           switch (err.status) {
             case 400:
-              this._sharedService.errorMsg(err.error);
+              this._NotificationService.errorMsg(err.error);
               break;
             case 401:
-              this._sharedService.errorMsg('Unauthorized request');
+              this._NotificationService.errorMsg('Unauthorized request');
               this._accountService.logout();
               break;
             case 404:
-              this._sharedService.errorMsg('Not Found');
+              this._NotificationService.errorMsg('Not Found');
               break;
             case 500:
-              this._sharedService.errorMsg('Internal Server Error');
+              this._NotificationService.errorMsg('Internal Server Error');
               break;
             default:
-              this._sharedService.errorMsg('Something unexpected went wrong');
+              this._NotificationService.errorMsg('Something unexpected went wrong');
               break;
           }
         }

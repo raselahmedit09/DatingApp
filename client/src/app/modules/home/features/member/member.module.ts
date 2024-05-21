@@ -5,13 +5,14 @@ import { MemberListComponent } from './components/member-list/member-list.compon
 import { SharedModule } from 'src/app/_helpers';
 import { MemberCardComponent } from './components/member-list/member-card/member-card.component';
 import { MemberDetailComponent } from './components/member-detail/member-detail.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { MemberEditComponent } from './components/member-edit/member-edit.component';
 
 @NgModule({
   declarations: [
     MemberListComponent,
     MemberCardComponent,
     MemberDetailComponent,
+    MemberEditComponent,
   ],
   imports: [
     MemberRoutingModule,

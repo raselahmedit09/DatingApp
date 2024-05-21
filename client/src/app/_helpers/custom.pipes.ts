@@ -9,7 +9,7 @@ export class dateFormatPipe implements PipeTransform {
 
     constructor() { }
 
-    transform(value: string, hasTimeStamp: boolean = false) {
+    transform(value: string | Date, hasTimeStamp: boolean = false) {
         var datePipe = new DatePipe("en-US");
         if (hasTimeStamp)
             return datePipe.transform(value, 'MM-dd-yyyy');

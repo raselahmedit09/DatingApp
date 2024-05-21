@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AccountService } from '../../services';
 import { first } from 'rxjs';
 import { Router } from '@angular/router';
-import { SharedService } from 'src/app/_helpers';
+import { NotificationService } from 'src/app/_helpers';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,7 @@ export class LoginComponent {
   constructor(
     private accountService: AccountService,
     private router: Router,
-    private sharedService: SharedService,
+    private notificationService: NotificationService,
   ) {
     console.log('Login component is initialized')
   }
@@ -37,7 +37,7 @@ export class LoginComponent {
       },
       error: err => {
         this.loading = false;
-        //this.sharedService.errorMsg(err.error ? err.error : 'Login Failed');
+        //this.notificationService.errorMsg(err.error ? err.error : 'Login Failed');
       }
     });
   };

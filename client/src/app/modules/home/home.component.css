@@ -1,7 +1,14 @@
-.grow {
-    flex: 1;
+html,
+body {
+    height: 100%;
 }
 
-.main {
-    overflow-y: auto;
+.container-fluid {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.row.flex-grow-1 {
+    flex: 1;
 }

@@ -1,16 +1,22 @@
-<div class="row grow w-100">
-    <div class="col-12 bg-primary py-3">
-        <app-header>app header</app-header>
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="row">
+        <div class="col-12 bg-primary py-3">
+            <app-header></app-header>
+        </div>
     </div>
-    <div class="col-2  py-3">
-        <app-sidebar></app-sidebar>
+
+    <!-- Content Area with Sidebar and Main Content -->
+    <div class="row flex-grow-1">
+        <div class="col-12 bg-warning py-3">
+            <router-outlet></router-outlet>
+        </div>
     </div>
-    <div class="main col-10 bg-warning h-300 py-3">
-        <router-outlet></router-outlet>
-    </div>
-</div>
-<div class="row w-100">
-    <div class="col-12 py-3 bg-danger">
-        <app-footer>footer</app-footer>
+
+    <!-- Footer -->
+    <div class="row">
+        <div class="col-12 bg-primary py-3">
+            <app-footer></app-footer>
+        </div>
     </div>
 </div>

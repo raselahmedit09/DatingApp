@@ -6,6 +6,7 @@ import { MemberCardComponent } from './components/member-list/member-card/member
 import { MemberDetailComponent } from './components/member-detail/member-detail.component';
 import { MemberEditComponent } from './components/member-edit/member-edit.component';
 import { SharedModule } from 'src/app/_modules/shared.module';
+import { MemberMessageComponent } from './components/member-message/member-message.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { SharedModule } from 'src/app/_modules/shared.module';
     MemberCardComponent,
     MemberDetailComponent,
     MemberEditComponent,
+    MemberMessageComponent,
   ],
   imports: [
     MemberRoutingModule,

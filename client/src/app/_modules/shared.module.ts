@@ -7,6 +7,7 @@ import { GalleryModule } from 'ng-gallery';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { TimeagoModule } from 'ngx-timeago';
 
 
 const formModules = [
@@ -34,7 +35,8 @@ const customPipes = [
     }),
     NgxSpinnerModule.forRoot({
       type: 'line-scale-party'
-    })
+    }),
+    TimeagoModule.forRoot(),
   ],
   exports: [
     CommonModule,
@@ -45,6 +47,7 @@ const customPipes = [
     BsDropdownModule,
     TabsModule,
     NgxSpinnerModule,
+    TimeagoModule,
   ],
 })
 export class SharedModule { }

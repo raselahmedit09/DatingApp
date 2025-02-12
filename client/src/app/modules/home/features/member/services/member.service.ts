@@ -58,4 +58,13 @@ export class MemberService {
       })
     );
   }
+
+  public addMember(model: any): Observable<MemberDetail> {
+    // Simulate delay
+    return this.http.put<MemberDetail[]>(this.baseUrl + 'Members/AddMember', model).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
 }

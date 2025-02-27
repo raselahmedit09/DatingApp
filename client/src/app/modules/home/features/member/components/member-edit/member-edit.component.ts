@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MemberDetail } from '../../models/memberDetail';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MemberService } from '../../services';
 import { NotificationService } from 'src/app/_services';
 
@@ -19,6 +19,7 @@ export class MemberEditComponent implements OnInit {
   private readonly memberId: number;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private memberService: MemberService,
     private notificationService: NotificationService,
@@ -44,8 +45,8 @@ export class MemberEditComponent implements OnInit {
   public updateMember(): void {
     this.memberService.updateMember(this.member).subscribe({
       next: (res) => {
-        this.member = res;
         this.notificationService.successMsg('Member info updated');
+        this.router.navigateByUrl('/main-dashboard');
       },
       error: err => {
       }

@@ -1,5 +1,6 @@
 using System;
 using API.DTOs;
+using API.Extensions;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -27,24 +28,24 @@ namespace API.Controllers
         [HttpPost("SendMessage")]
         public async Task<ActionResult<MessageDto>> SendMessage(CreateMessageDto createMessageDto)
         {
-            // var username = User.GetUsername();
+            var currentUserId = User.GetUserId();
 
-            // if (username == createMessageDto.RecipientUsername.ToLower())
-            //     return BadRequest("You cannot send messages to yourself");
+            if (currentUserId == createMessageDto.RecipientUserId)
+                return BadRequest("You cannot send messages to yourself");
 
-            // var sender = await _userRepository.GetUserByUsernameAsync(username);
-            // var recipient = await _userRepository.GetUserByUsernameAsync(createMessageDto.RecipientUsername);
+            var recipient = await _unitOfWork._userRepository.GetUserByUserName(createMessageDto.RecipientUserName);
 
-            // if (recipient == null) return NotFound();
+            if (recipient == null) return NotFound();
 
-            // var message = new Message
-            // {
-            //     Sender = sender,
-            //     Recipient = recipient,
-            //     SenderUsername = sender.UserName,
-            //     RecipientUsername = recipient.UserName,
-            //     Content = createMessageDto.Content
-            // };
+            CreateMessageDto sendMessage = new CreateMessageDto
+            {
+                SenderUserId = currentUserId,
+                RecipientUserId = createMessageDto.RecipientUserId,
+                Content = createMessageDto.Content
+            };
+
+            // await _unitOfWork._memberRepository.Add(_mapper.Map<Member>(createMemberDto));
+            // await _unitOfWork.CompleteAsync();
 
             // _messageRepository.AddMessage(message);
 

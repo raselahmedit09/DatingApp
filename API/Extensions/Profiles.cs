@@ -16,6 +16,7 @@ public class Profiles : Profile
 
         //----------------------------- Domain to Database -------------------------
         CreateMap<CreateMemberDto, Member>();
+        CreateMap<CreateMessageDto, Message>();
         //CreateMap<UserDto, AppUser>();
     }
 }

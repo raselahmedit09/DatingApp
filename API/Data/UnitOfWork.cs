@@ -16,6 +16,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     public IUserRepository _userRepository => new UserRepository(_dbContext);
     public IMemberRepository _memberRepository => new MemberRepository(_dbContext);
     public IMemberPhotoRepository _memberPhotoRepository => new MemberPhotoRepository(_dbContext);
+    public IMessagesRepository _messagesRepository => new MessagesRepository(_dbContext);
 
 
     public async Task<bool> CompleteAsync()

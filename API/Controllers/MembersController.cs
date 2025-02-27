@@ -73,19 +73,4 @@ public class MembersController : BaseApiController
         return BadRequest("Failed to update user");
 
     }
-
-    [AllowAnonymous]
-    [HttpPut("AddMember")]
-    public async Task<ActionResult> AddMember(MemberDto memberDto)
-    {
-
-        await _unitOfWork._memberRepository.Add(_mapper.Map<Member>(memberDto));
-
-
-        if (await _unitOfWork.CompleteAsync()) return NoContent();
-
-        return BadRequest("Failed to update user");
-
-    }
-
 }

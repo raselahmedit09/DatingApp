@@ -33,7 +33,6 @@ export class LoginComponent {
 
     this.accountService.login(this.loginInfo).pipe(first()).subscribe({
       next: () => {
-
         this.router.navigateByUrl('/member-list');
       },
       error: err => {

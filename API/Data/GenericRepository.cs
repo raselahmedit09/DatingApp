@@ -48,6 +48,21 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         }
     }
 
+    public virtual async Task<T> AddAndReturnAsync(T entity)
+    {
+        try
+        {
+            await dbSet.AddAsync(entity);
+            await _dataContext.SaveChangesAsync();
+            return entity;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error adding entity");
+            return null;
+        }
+    }
+
     public virtual async Task<bool> Delete(int id)
     {
         try

@@ -1,5 +1,6 @@
 using System;
 using API.DTOs;
+using API.Entities;
 using API.Extensions;
 using API.Interfaces;
 using AutoMapper;
@@ -26,7 +27,7 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpPost("SendMessage")]
-        public async Task<ActionResult<MessageDto>> SendMessage(CreateMessageDto createMessageDto)
+        public async Task<ActionResult<MessageResponseDto>> SendMessage(CreateMessageDto createMessageDto)
         {
             var currentUserId = User.GetUserId();
 
@@ -41,20 +42,13 @@ namespace API.Controllers
             {
                 SenderUserId = currentUserId,
                 RecipientUserId = createMessageDto.RecipientUserId,
-                Content = createMessageDto.Content
+                Content = createMessageDto.Content,
+                RecipientUserName = createMessageDto.RecipientUserName,
+                MessageSent = DateTime.UtcNow
             };
 
-            // await _unitOfWork._memberRepository.Add(_mapper.Map<Member>(createMemberDto));
-            // await _unitOfWork.CompleteAsync();
-
-            // _messageRepository.AddMessage(message);
-
-            // if (await _messageRepository.SaveAllAsync()) return Ok(_mapper.Map<MessageDto>(message));
-
-            return BadRequest("Failed to send message");
+            var message = await _unitOfWork._messagesRepository.AddAndReturnAsync(_mapper.Map<Message>(sendMessage));
+            return Ok(_mapper.Map<MessageResponseDto>(message));
         }
-
-
-
     }
 }

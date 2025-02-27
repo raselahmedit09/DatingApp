@@ -8,10 +8,13 @@ public class Profiles : Profile
 {
     public Profiles()
     {
-        //----------------------------- Database to Domain -------------------------
+
         CreateMap<AppUser, UserDto>().ReverseMap();
-        CreateMap<Member, MemberDto>().ReverseMap(); ;
+        CreateMap<Member, MemberDto>().ReverseMap();
+
+        //----------------------------- Database to Domain -------------------------
         CreateMap<MemberPhoto, MemberPhotoDto>();
+        CreateMap<Message, MessageResponseDto>();
 
 
         //----------------------------- Domain to Database -------------------------

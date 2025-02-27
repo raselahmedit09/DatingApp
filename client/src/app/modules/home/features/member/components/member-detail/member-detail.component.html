@@ -45,7 +45,7 @@
                 <gallery *ngIf="photoTab.active" [items]="images" class="gallery"></gallery>
             </tab>
             <tab heading="Messages" #messagesTab="tab" (selectTab)="onTabActivated($event)">
-                <app-member-message [memeberId]="member.id"></app-member-message>
+                <app-member-message [userId]="member.userId"></app-member-message>
             </tab>
         </tabset>
     </div>

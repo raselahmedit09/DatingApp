@@ -11,9 +11,8 @@ export interface MemberDetail {
     interests: string;
     gender: string;
     knownAs: string;
-    userId: string;
+    userId: number;
     lastActive: Date;
     country: string;
-
     memberPhotos: Photo[];
 }

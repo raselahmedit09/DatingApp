@@ -4,7 +4,7 @@
             No messages yet... say hi by using the message box below
         </div>
 
-        <ul *ngIf="messages.length > 0" class="chat">
+        <ul *ngIf="messages.length > 0" class="chat" scrollMe>
             <li *ngFor="let message of messages">
                 <div>
                     <span class="chat-img float-end">
@@ -16,9 +16,9 @@
                             <small class="text-muted">
                                 <span class="fa fa-clock-o">{{message.messageSent + 'Z' | timeago}}</span>
                                 <span class="text-danger" *ngIf="!message.dateRead 
-                                    && message.senderUsername !== username">(unread)</span>
+                                    && message.SenderUserId !== userId">(unread)</span>
                                 <span class="text-success" *ngIf="message.dateRead 
-                                    && message.senderUsername !== username">(read {{message.dateRead + 'Z' |
+                                    && message.SenderUserId !== userId">(read {{message.dateRead + 'Z' |
                                     timeago}})</span>
                             </small>
                         </div>

@@ -26,29 +26,36 @@ namespace API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("SendMessage")]
-        public async Task<ActionResult<MessageResponseDto>> SendMessage(CreateMessageDto createMessageDto)
+        [HttpPost("Send")]
+        public async Task<ActionResult<MessageResponseDto>> Send(CreateMessageDto createMessageDto)
         {
-            var currentUserId = User.GetUserId();
-
-            if (currentUserId == createMessageDto.RecipientUserId)
-                return BadRequest("You cannot send messages to yourself");
-
-            var recipient = await _unitOfWork._userRepository.GetUserByUserName(createMessageDto.RecipientUserName);
-
-            if (recipient == null) return NotFound();
-
-            CreateMessageDto sendMessage = new CreateMessageDto
+            try
             {
-                SenderUserId = currentUserId,
-                RecipientUserId = createMessageDto.RecipientUserId,
-                Content = createMessageDto.Content,
-                RecipientUserName = createMessageDto.RecipientUserName,
-                MessageSent = DateTime.UtcNow
-            };
+                var currentUserId = User.GetUserId();
 
-            var message = await _unitOfWork._messagesRepository.AddAndReturnAsync(_mapper.Map<Message>(sendMessage));
-            return Ok(_mapper.Map<MessageResponseDto>(message));
+                if (currentUserId == createMessageDto.RecipientUserId)
+                    return BadRequest("You cannot send messages to yourself");
+
+                var recipient = await _unitOfWork._userRepository.GetById(createMessageDto.RecipientUserId);
+
+                if (recipient == null) return NotFound();
+
+                CreateMessageDto sendMessage = new CreateMessageDto
+                {
+                    SenderUserId = currentUserId,
+                    RecipientUserId = createMessageDto.RecipientUserId,
+                    Content = createMessageDto.Content,
+                    MessageSent = DateTime.UtcNow
+                };
+
+                var message = await _unitOfWork._messagesRepository.AddAndReturnAsync(_mapper.Map<Message>(sendMessage));
+                return Ok(_mapper.Map<MessageResponseDto>(message));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }

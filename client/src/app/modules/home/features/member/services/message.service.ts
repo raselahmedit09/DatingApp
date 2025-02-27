@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Message } from '../models/message';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -14,8 +15,13 @@ export class MessageService {
         console.log('Message service initialized');
     }
 
-    sendMessage(username: string, content: string) {
-        return this.http.post<Message>(this.baseUrl + 'messages',
-            { recipientUsername: username, content });
+    sendMessage(model: any) {
+        return this.http.post<Message>(this.baseUrl + 'Messages/Send', model).pipe(
+            map((response: Message) => {
+                if (response) {
+
+                }
+            })
+        )
     }
 }

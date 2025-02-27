@@ -46,10 +46,13 @@ public class AccountController : BaseApiController
         await _unitOfWork._userRepository.Add(user);
         await _unitOfWork.CompleteAsync();
 
+        var loginUser = await _unitOfWork._userRepository.GetUserByUserName(registerDto.UserName);
+
         return new UserDto
         {
-            UserName = user.UserName,
-            Token = _tokenService.CreateToken(user)
+            Id = loginUser.Id,
+            UserName = loginUser.UserName,
+            Token = _tokenService.CreateToken(loginUser)
         };
     }
 

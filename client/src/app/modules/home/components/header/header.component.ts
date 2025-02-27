@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 import { User } from 'src/app/modules/account/models';
 import { AccountService } from 'src/app/modules/account/services';
 
@@ -9,7 +10,7 @@ import { AccountService } from 'src/app/modules/account/services';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
+  isDropdownOpen = false;
   public loginUser: User | undefined;
 
   constructor(
@@ -25,7 +26,5 @@ export class HeaderComponent implements OnInit {
 
   public onLogout(): void {
     this.accountService.logout();
-    this.router.navigateByUrl('/login');
   };
-
 }

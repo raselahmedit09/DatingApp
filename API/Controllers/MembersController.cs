@@ -1,5 +1,6 @@
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -29,6 +30,7 @@ public class MembersController : BaseApiController
     [HttpGet("GetMembers")]
     public async Task<ActionResult<IList<MemberDto>>> GetMembers()
     {
+        var test = User.GetUsername();
         var members = await _unitOfWork._memberRepository.GetMembers();
         IList<MemberDto> memberList = _mapper.Map<IEnumerable<MemberDto>>(members).ToList();
         return Ok(memberList);

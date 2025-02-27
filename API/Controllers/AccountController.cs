@@ -31,29 +31,59 @@ public class AccountController : BaseApiController
     [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
-
-        if (await IsUserExists(registerDto.UserName)) return BadRequest("This User is already exists!");
-
-        using var hmac = new HMACSHA512();
-
-        var user = new AppUser
+        try
         {
-            UserName = registerDto.UserName,
-            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-            PasswordSalt = hmac.Key,
+            if (await IsUserExists(registerDto.UserName)) return BadRequest("This User is already exists!");
+
+            using var hmac = new HMACSHA512();
+
+            var user = new AppUser
+            {
+                UserName = registerDto.UserName,
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+                PasswordSalt = hmac.Key,
+            };
+
+            await _unitOfWork._userRepository.Add(user);
+            await _unitOfWork.CompleteAsync();
+
+            var registerdUser = await _unitOfWork._userRepository.GetUserByUserName(registerDto.UserName);
+
+            await AddAsDefaultMember(registerDto, registerdUser.Id);
+
+            return new UserDto
+            {
+                Id = registerdUser.Id,
+                UserName = registerdUser.UserName,
+                Token = _tokenService.CreateToken(registerdUser)
+            };
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    private async Task<bool> IsUserExists(string userName)
+    {
+        return await _unitOfWork._userRepository.IsUserExists(userName);
+    }
+
+    private async Task AddAsDefaultMember(RegisterDto registerdUser, int userId)
+    {
+        CreateMemberDto createMemberDto = new CreateMemberDto
+        {
+            UserId = userId,
+            FirstName = registerdUser.FirstName,
+            LastName = registerdUser.LastName,
+            DateOfBirth = registerdUser.DateOfBirth,
+            KnownAs = registerdUser.FirstName,
+            Gender = registerdUser.Gender,
+            Created = DateTime.Now,
         };
 
-        await _unitOfWork._userRepository.Add(user);
+        await _unitOfWork._memberRepository.Add(_mapper.Map<Member>(createMemberDto));
         await _unitOfWork.CompleteAsync();
-
-        var loginUser = await _unitOfWork._userRepository.GetUserByUserName(registerDto.UserName);
-
-        return new UserDto
-        {
-            Id = loginUser.Id,
-            UserName = loginUser.UserName,
-            Token = _tokenService.CreateToken(loginUser)
-        };
     }
 
     [HttpPost("login")]
@@ -79,12 +109,5 @@ public class AccountController : BaseApiController
             UserName = user.UserName,
             Token = _tokenService.CreateToken(user)
         };
-    }
-
-
-    private async Task<bool> IsUserExists(string userName)
-    {
-
-        return await _unitOfWork._userRepository.IsUserExists(userName);
     }
 }

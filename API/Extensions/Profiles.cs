@@ -13,7 +13,9 @@ public class Profiles : Profile
         CreateMap<Member, MemberDto>().ReverseMap(); ;
         CreateMap<MemberPhoto, MemberPhotoDto>();
 
+
         //----------------------------- Domain to Database -------------------------
+        CreateMap<CreateMemberDto, Member>();
         //CreateMap<UserDto, AppUser>();
     }
 }

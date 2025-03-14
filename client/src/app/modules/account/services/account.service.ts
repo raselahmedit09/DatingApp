@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { User } from '../models';
+import { SignalRService } from 'src/app/_services/signal-r.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { User } from '../models';
 
 export class AccountService {
   private baseUrl = environment.apiUrl;
+  private signalRService = inject(SignalRService);
 
   private loginUserObservable = new BehaviorSubject<any>(null);
   public getLoginUserObservable = (): Observable<any> => this.loginUserObservable.asObservable();
@@ -42,6 +44,8 @@ export class AccountService {
   setCurrentUser(response: User) {
     localStorage.setItem('user', JSON.stringify(response));
     this.setLoginUserObservable(response);
+
+    this.signalRService.createHubConnectionOnlineUsers(response);
   }
 
   public logout() {

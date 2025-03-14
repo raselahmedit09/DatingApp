@@ -4,6 +4,7 @@ import { HubConnection, HubConnectionBuilder, HubConnectionState } from '@micros
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { AccountService } from '../modules/account/services';
+import * as signalR from '@microsoft/signalr';
 
 @Injectable({
   providedIn: 'root'
@@ -14,31 +15,30 @@ export class SignalRService {
   private hubConnection?: HubConnection;
   private toastr = inject(ToastrService);
   private router = inject(Router);
-  private accountService = inject(AccountService);
 
-  onlineUsers = signal<string[]>([]);
+  onlineUserIds = signal<number[]>([]);
 
   constructor() { }
 
-  createHubConnectionOnlineUsers() {
-
-    const loginUser = this.accountService.getLoginUserData();
-
+  createHubConnectionOnlineUsers(loginUser: any) {
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.hubUrl + 'presence', {
-        accessTokenFactory: () => loginUser.token
+        accessTokenFactory: () => loginUser.token,
+        transport: signalR.HttpTransportType.WebSockets
       })
       .withAutomaticReconnect()
       .build();
 
-    this.hubConnection.start().catch(error => console.log(error));
+    this.hubConnection.start()
+      .then(() => console.log('SignalR Connected'))
+      .catch(err => console.error('SignalR Connection Error: ', err));
 
-    this.hubConnection.on('UserIsOnline', username => {
-      this.onlineUsers.update(users => [...users, username]);
+    this.hubConnection.on('UserIsOnline', userId => {
+      this.onlineUserIds.update(users => [...users, userId]);
     });
 
-    this.hubConnection.on('UserIsOffline', username => {
-      this.onlineUsers.update(users => users.filter(x => x !== username));
+    this.hubConnection.on('UserIsOffline', userId => {
+      this.onlineUserIds.update(users => users.filter(x => x !== userId));
     });
   }
 

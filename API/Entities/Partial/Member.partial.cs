@@ -9,4 +9,6 @@ public partial class Member
 
     [NotMapped]
     public int Age { get; set; }
+
+
 }
